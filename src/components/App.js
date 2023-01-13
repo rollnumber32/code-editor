@@ -27,7 +27,7 @@ function App() {
         <Editor type="JS" value={JS} handleChange={handleJSChange} />
       </div>
       <div className="bottom-pane">
-        <iframe></iframe>
+        <iframe className="bottom-pane__frame"></iframe>
       </div>
     </div>
   );
