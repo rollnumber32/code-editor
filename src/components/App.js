@@ -1,8 +1,9 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Editor from "./Editor";
 
 function App() {
+  const [srcDoc, setSrcDoc] = useState("");
   const [HTML, setHTML] = useState(null);
   const [CSS, setCSS] = useState(null);
   const [JS, setJS] = useState(null);
@@ -19,6 +20,14 @@ function App() {
     setJS(value);
   };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSrcDoc(`${HTML} <style> ${CSS} </style> <script> ${JS} </script>`);
+    }, 2500);
+
+    return () => clearTimeout(timeout);
+  }, [HTML, CSS, JS]);
+
   return (
     <div>
       <div className="top-pane">
@@ -27,7 +36,7 @@ function App() {
         <Editor type="JS" value={JS} handleChange={handleJSChange} />
       </div>
       <div className="bottom-pane">
-        <iframe className="bottom-pane__frame"></iframe>
+        <iframe className="bottom-pane__frame" srcDoc={srcDoc} title="Output" />
       </div>
     </div>
   );
